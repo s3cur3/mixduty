@@ -53,7 +53,7 @@ defmodule Mixduty.MixProject do
       {:dialyxir, "~> 1.2", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.24", only: :dev, runtime: false},
       {:httpoison, "~> 2.2"},
-      {:jason, "~> 1.2.2"},
+      {:jason, "~> 1.4"},
       {:morphix, "~> 0.8.0"},
       {:plug_cowboy, "~> 2.6"},
       {:recode, "~> 0.6", only: [:dev, :test]}

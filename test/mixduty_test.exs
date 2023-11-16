@@ -123,12 +123,10 @@ defmodule MixdutyTest do
            """
          }}
 
-      assert {:error,
-              %Mixduty.Error{
-                message: "JSON parse error: unexpected byte at position 16: 0x72 ('r')",
-                status_code: 201,
-                cause: _
-              }} = Mixduty.Response.new(response)
+      assert {:error, %Mixduty.Error{message: message, status_code: 201, cause: _}} =
+               Mixduty.Response.new(response)
+
+      assert String.starts_with?(message, "JSON parse error: unexpected byte at position")
     end
 
     test "passes through server errors" do
