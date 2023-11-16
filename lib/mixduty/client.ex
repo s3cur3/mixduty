@@ -17,11 +17,9 @@ defmodule Mixduty.Client do
     new(auth, headers: [])
   end
 
-  @doc """
-  Create the client with additional headers
+  # Create the client with additional headers
   #### Example
-      Mixduty.Client.new("myauthtoken", [headers: [{"X-EARLY-ACCESS", "business-impact-early-access"}])
-  """
+  #    Mixduty.Client.new("myauthtoken", [headers: [{"X-EARLY-ACCESS", "business-impact-early-access"}])
   def new(auth, headers: additional_headers) do
     %Client{
       headers:
@@ -33,21 +31,17 @@ defmodule Mixduty.Client do
     }
   end
 
-  @doc """
-  Create the client for Bearer authorization token
+  # Create the client for Bearer authorization token
   #### Example
-      Mixduty.Client.new("bearerauthtoken", [type: :bearer])
-  """
+  #    Mixduty.Client.new("bearerauthtoken", [type: :bearer])
   def new(auth, type: :bearer) do
     new(auth, type: :bearer, headers: [])
   end
 
-  @doc """
-  Internal use only
-  Create the client for Bearer authorization token with additional headers
+  # Internal use only
+  # Create the client for Bearer authorization token with additional headers
   #### Example
-      Mixduty.Client.new("bearerauthtoken", [type: :bearer, headers: [{"X-EARLY-ACCESS", "business-impact-early-access"}])
-  """
+  #    Mixduty.Client.new("bearerauthtoken", [type: :bearer, headers: [{"X-EARLY-ACCESS", "business-impact-early-access"}])
   def new(auth, type: :bearer, headers: additional_headers) do
     %Client{
       headers:

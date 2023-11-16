@@ -28,14 +28,16 @@ defmodule Mixduty.Incidents do
   """
   def create(title, service_id, from, client, options \\ %{}) do
     incident_body =
-      %{
-        title: title,
-        service: %{
-          id: service_id,
-          type: "service_reference"
-        }
-      }
-      |> Map.merge(options)
+      Map.merge(
+        %{
+          title: title,
+          service: %{
+            id: service_id,
+            type: "service_reference"
+          }
+        },
+        options
+      )
 
     body = %{incident: incident_body}
     client = Map.put(client, :headers, client.headers ++ [{"From", from}])
@@ -100,7 +102,7 @@ defmodule Mixduty.Incidents do
   """
   @spec create_status_update(
           client :: Mixduty.Client.t(),
-          incident_id :: Stringt.t(),
+          incident_id :: String.t(),
           status_update :: String.t()
         ) ::
           %{required(:status_code) => integer(), required(:data) => map()}

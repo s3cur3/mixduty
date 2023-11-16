@@ -1,6 +1,6 @@
 defmodule Mixduty.Error do
   @enforce_keys [:message]
-  @derive {Inspect, except: [:request]}
+  @derive Inspect
 
   defstruct [
     :message,

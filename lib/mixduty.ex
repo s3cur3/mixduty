@@ -1,7 +1,7 @@
 defmodule Mixduty do
   require Logger
-  alias Mixduty.Client
   alias Jason, as: JSON
+  alias Mixduty.Client
   alias Mixduty.Response
 
   def get(path, client, params \\ [], options \\ []) do

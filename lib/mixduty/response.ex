@@ -21,7 +21,7 @@ defmodule Mixduty.Response do
           | any()
 
   @type t :: %__MODULE__{
-          body: Map.t() | String.t(),
+          body: map() | String.t(),
           headers: headers(),
           status_code: integer(),
           request: HTTPoison.Request.t(),

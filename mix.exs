@@ -11,7 +11,19 @@ defmodule Mixduty.MixProject do
       package: package(),
       name: "Mixduty",
       source_url: "https://github.com/PagerDuty/mixduty",
-      deps: deps()
+      aliases: aliases(),
+      deps: deps(),
+      preferred_cli_env: [
+        check: :test,
+        dialyzer: :dev
+      ],
+      dialyzer: [
+        # ignore_warnings: ".dialyzer_ignore.exs",
+        plt_file: {:no_warn, "priv/plts/dialyzer.plt"},
+        flags: [:error_handling, :unknown],
+        # Error out when an ignore rule is no longer useful so we can remove it
+        list_unused_filters: true
+      ]
     ]
   end
 
@@ -38,11 +50,37 @@ defmodule Mixduty.MixProject do
 
   defp deps do
     [
-      {:httpoison, "~> 1.6"},
-      {:jason, "~> 1.2.2"},
+      {:dialyxir, "~> 1.2", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.24", only: :dev, runtime: false},
-      {:plug_cowboy, "~> 1.0"},
-      {:morphix, "~> 0.8.0"}
+      {:httpoison, "~> 2.2"},
+      {:jason, "~> 1.2.2"},
+      {:morphix, "~> 0.8.0"},
+      {:plug_cowboy, "~> 2.6"},
+      {:recode, "~> 0.6", only: [:dev, :test]}
+    ]
+  end
+
+  defp aliases do
+    [
+      check: [
+        "clean",
+        "check.fast",
+        "test --warnings-as-errors --only integration"
+      ],
+      "check.fast": [
+        "deps.unlock --check-unused",
+        "compile --warnings-as-errors",
+        "test --warnings-as-errors",
+        "check.quality"
+      ],
+      "check.quality": [
+        "format --check-formatted",
+        "check.circular",
+        "check.dialyzer",
+        "recode"
+      ],
+      "check.circular": "cmd MIX_ENV=dev mix xref graph --label compile-connected --fail-above 0",
+      "check.dialyzer": "cmd MIX_ENV=dev mix dialyzer"
     ]
   end
 end
